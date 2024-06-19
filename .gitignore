@@ -1,4 +1,6 @@
 discord
 htop
 nvtop
-pulse/
+pulse
+pavucontrol.ini
+systemd
