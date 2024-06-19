@@ -1,6 +1,8 @@
 # Packages Installed
 ```
 vim
+vi
+nano
 zip
 unzip
 git
