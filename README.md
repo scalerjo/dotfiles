@@ -1,3 +1,8 @@
+# Instructions
+- Ensure the packages are installed as listed in the README. AUR Packages are required.
+- Clone this repo to your home director and rename the folder to `.config`
+- Configure LightDM or whatever display manager you use. Config not included here.
+
 # Packages Installed
 ```
 vim
