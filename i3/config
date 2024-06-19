@@ -207,9 +207,17 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+space exec --no-startup-id rofi -show combi
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
-# set autolock
-exec "xautolock -detectsleep -time 3 -locker \"i3lock -c 000000\""
+# disable screen saver and power saver timeouts. handle it xidlehook
+exec --no-startup-id xset s off
+exec --no-startup-id xset dpms 0 0 0
 
+# Set power saver settings and locking timers
+exec --no-startup-id xidlehook --not-when-audio \
+	--timer 300 '~/.config/scripts/dim_displays.sh 0.1' '~/.config/scripts/dim_displays.sh 1' \
+	--timer 600 'xset dpms force standby' '' \
+	--timer 900 'xset dpms force suspend' '' \
+	--timer 1200 'xset dpms force off' '' \
+	--timer 1800 'i3lock -c 000000' '' 
 
 set $rosewater #f5e0dc
 set $flamingo  #f2cdcd
