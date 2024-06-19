@@ -6,6 +6,12 @@ nano
 zip
 unzip
 git
+i3
+xorg
+xorg-xinit
+alacritty
+zsh
+zsh-completions
 neofetch
 firefox
 puleaudio
