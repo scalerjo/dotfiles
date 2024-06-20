@@ -7,6 +7,7 @@
 ```
 vim
 vi
+neovim
 nano
 zip
 unzip
@@ -36,6 +37,7 @@ feh
 rofi
 openssh
 xautolock
+tree
 ```
 
 # AUR Packages Installed
@@ -51,3 +53,6 @@ xidlehook
 nvidia
 lm_sensors
 ```
+
+# Packages for Neovim
+ripgrep
