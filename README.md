@@ -38,6 +38,7 @@ rofi
 openssh
 xautolock
 tree
+light-locker
 ```
 
 # AUR Packages Installed

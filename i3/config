@@ -23,13 +23,6 @@ font pango:Meslo LGM Nerd Font 8
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
@@ -153,8 +146,6 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -208,17 +199,6 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+space exec --no-startup-id rofi -show combi
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
-# disable screen saver and power saver timeouts. handle it xidlehook
-exec --no-startup-id xset s off
-exec --no-startup-id xset dpms 0 0 0
-
-# Set power saver settings and locking timers
-exec --no-startup-id xidlehook --not-when-audio \
-	--timer 600 'xset dpms force standby' '' \
-	--timer 900 'xset dpms force suspend' '' \
-	--timer 1200 'xset dpms force off' '' \
-	--timer 1800 'i3lock -c 000000' '' 
-
 set $rosewater #f5e0dc
 set $flamingo  #f2cdcd
 set $pink      #f5c2e7
@@ -254,3 +234,10 @@ client.urgent            $peach    $base  $peach   $overlay0  $peach
 client.placeholder       $overlay0 $base  $text    $overlay0  $overlay0
 client.background        $base
 
+# check if the light locker service is enabled and active
+# exec --no-startup-id ~/.config/i3/provision-light-locker.sh
+
+# manually lock
+bindsym $mod+Shift+e exec --no-startup-id light-locker-command -l
+ 
+exec --no-startup-id ~/.config/scripts/start-light-locker.sh

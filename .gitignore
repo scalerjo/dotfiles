@@ -4,3 +4,4 @@ nvtop
 pulse
 pavucontrol.ini
 systemd
+dconf
