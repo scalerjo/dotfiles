@@ -64,6 +64,7 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
       end,
     })
 
@@ -82,6 +83,11 @@ return {
       -- default handler for installed servers
       function(server_name)
         lspconfig[server_name].setup({
+          capabilities = capabilities,
+        })
+      end,
+      ["tsserver"] = function()
+        lspconfig["tsserver"].setup({
           capabilities = capabilities,
         })
       end,
@@ -131,6 +137,43 @@ return {
           },
         })
       end,
+      ["pylsp"] = function()
+        lspconfig["pylsp"].setup({
+          settings = {
+            pylsp = {
+              plugins = {
+                flake8 = {
+                  enabled = true,
+                  maxLineLength = 119,
+                },
+                mypy = {
+                  enabled = true,
+                },
+                pycodestyle = {
+                  enabled = false,
+                },
+                pyflakes = {
+                  enabled = false,
+                },
+                rope_autoimport = {
+                  enabled = true,
+                  completions = {
+                      enabled = true
+                  },
+                  code_actions = {
+                      enabled = true
+                  }
+                }
+              }
+            }
+          }
+
+        })
+      end,
+      -- ["pyright"] = function()
+      --   lspconfig["pyright"].setup({
+      --   })
+      -- end,
     })
   end,
 }
