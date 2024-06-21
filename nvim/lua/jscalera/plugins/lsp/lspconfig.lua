@@ -73,7 +73,7 @@ return {
 
     -- function to define custom root dir
     local function custom_root_dir()
-      return vim.loop.cwd()
+      return nil
     end
 
     -- Change the Diagnostic symbols in the sign column (gutter)
@@ -144,7 +144,7 @@ return {
       end,
       ["pylsp"] = function()
         lspconfig["pylsp"].setup({
-          root_dir = custom_root_dir, 
+          root_dir = custom_root_dir,
           settings = {
             pylsp = {
               plugins = {
