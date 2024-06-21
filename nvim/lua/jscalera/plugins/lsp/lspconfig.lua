@@ -71,6 +71,11 @@ return {
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
+    -- function to define custom root dir
+    local function custom_root_dir()
+      return vim.loop.cwd()
+    end
+
     -- Change the Diagnostic symbols in the sign column (gutter)
     -- (not in youtube nvim video)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -139,6 +144,7 @@ return {
       end,
       ["pylsp"] = function()
         lspconfig["pylsp"].setup({
+          root_dir = custom_root_dir, 
           settings = {
             pylsp = {
               plugins = {
@@ -155,6 +161,9 @@ return {
                 pyflakes = {
                   enabled = false,
                 },
+                black = {
+                  enabled = true,
+                },
                 rope_autoimport = {
                   enabled = true,
                   completions = {
@@ -170,10 +179,6 @@ return {
 
         })
       end,
-      -- ["pyright"] = function()
-      --   lspconfig["pyright"].setup({
-      --   })
-      -- end,
     })
   end,
 }
