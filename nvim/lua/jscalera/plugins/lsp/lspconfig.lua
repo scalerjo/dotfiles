@@ -11,9 +11,6 @@ return {
     -- import lspconfig plugin
     local lspconfig = require("lspconfig")
 
-    -- import mason_lspconfig plugin
-    local mason_lspconfig = require("mason-lspconfig")
-
     -- import cmp-nvim-lsp plugin
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -68,14 +65,6 @@ return {
       end,
     })
 
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = cmp_nvim_lsp.default_capabilities()
-
-    -- function to define custom root dir
-    local function custom_root_dir()
-      return nil
-    end
-
     -- Change the Diagnostic symbols in the sign column (gutter)
     -- (not in youtube nvim video)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -106,53 +95,6 @@ return {
           ]], false)
       end
     end
-
-    mason_lspconfig.setup_handlers({
-      -- default handler for installed servers
-      function(server_name)
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-        })
-      end,
-      ["tsserver"] = function()
-        lspconfig["tsserver"].setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-        })
-      end,
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
-          capabilities = capabilities,
-          on_attach = on_attach,
-          settings = {
-            Lua = {
-              -- make the language server recognize "vim" global
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
-        })
-      end,
-      ["pyright"] = function()
-        lspconfig["pyright"].setup({
-          capabilities = capabilities,
-          init_options = { documentFormatting = true },
-          on_attach = on_attach,
-          settings = {
-            python = {
-              analysis = {
-                typeCheckingMode = "off",
-              },
-            },
-          },
-        })
-      end,
-    })
 
     -- setup formatters and linters
     local eslint = {
@@ -186,6 +128,32 @@ return {
         "%f:%l:%c: %tote: %m",
       },
     }
+    
+    -- used to enable autocompletion (assign to every lsp server config)
+    local capabilities = cmp_nvim_lsp.default_capabilities()
+
+
+    -- configure pyright server
+    lspconfig.pyright.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      init_options = { documentFormatting = true },
+      settings = {
+        python = {
+          analysis = {
+            typeCheckingMode = "off",
+          },
+        },
+      },
+    })
+
+    -- configure tsserver language server
+    lspconfig.tsserver.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
+
+
     -- configure efm language server
     lspconfig.efm.setup({
       capabilities = capabilities,
