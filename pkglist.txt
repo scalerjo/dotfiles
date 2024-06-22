@@ -21,6 +21,7 @@ lightdm-gtk-greeter
 lightdm-webkit2-greeter
 linux
 linux-firmware
+lua-language-server
 neofetch
 neovim
 networkmanager

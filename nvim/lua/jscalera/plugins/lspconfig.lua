@@ -74,7 +74,7 @@ return {
     end
 
 
-    on_attach = function(client, bufnr)
+    local on_attach = function(client, _)
       vim.cmd([[
           augroup lsp_autoformat
             autocmd! * <buffer>
@@ -128,10 +128,22 @@ return {
         "%f:%l:%c: %tote: %m",
       },
     }
-    
+
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
+    -- configure lua_ls with formatting
+    lspconfig.lua_ls.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      format = {
+        enable = true,
+        defaultConfig = {
+          indent_style = "space",
+          indent_size = 2,
+        }
+      },
+    })
 
     -- configure pyright server
     lspconfig.pyright.setup({
