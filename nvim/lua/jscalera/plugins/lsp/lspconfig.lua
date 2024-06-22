@@ -189,7 +189,7 @@ return {
     -- configure efm language server
     lspconfig.efm.setup({
       capabilities = capabilities,
-      filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+      filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact", "html" },
       init_options = { documentFormatting = true },
       settings = {
         rootMarkers = { ".eslintrc.js", "tsconfig.json", "setup.cfg", "setup.py", ".git/" },
@@ -199,6 +199,7 @@ return {
           typescript = { prettier, eslint },
           javascriptreact = { prettier, eslint },
           typescriptreact = { prettier, eslint },
+          html = { prettier },
         },
       },
       on_attach = on_attach,
