@@ -5,7 +5,7 @@ return {
     "hrsh7th/cmp-nvim-lsp",
     "mattn/efm-langserver",
     { "antosha417/nvim-lsp-file-operations", config = true },
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/neodev.nvim",                   opts = {} },
   },
   config = function()
     -- import lspconfig plugin
@@ -65,7 +65,6 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-
       end,
     })
 
@@ -87,15 +86,15 @@ return {
 
 
     on_attach = function(client, bufnr)
-        vim.cmd([[
-          augroup lsp_autoformat 
+      vim.cmd([[
+          augroup lsp_autoformat
             autocmd! * <buffer>
             autocmd BufWritePre <buffer> lua vim.lsp.buf.format(nil, 1000)
           augroup END
         ]], false)
 
-        if client.server_capabilities.document_highlight then
-          vim.cmd([[
+      if client.server_capabilities.document_highlight then
+        vim.cmd([[
             hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
             hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
             hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
@@ -105,8 +104,8 @@ return {
               autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
             augroup END
           ]], false)
-        end
       end
+    end
 
     mason_lspconfig.setup_handlers({
       -- default handler for installed servers
@@ -203,7 +202,7 @@ return {
     }
 
     local flake8 = {
-      lintCommand = "flake8 --stdin-display-name ${INPUT} -",
+      lintCommand = "./.venv/bin/flake8 --stdin-display-name ${INPUT} -",
       lintStdin = true,
       lintFormats = { "%f:%l:%c: %m" },
     }
