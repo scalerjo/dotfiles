@@ -36,7 +36,7 @@ return {
         "graphql",
         "emmet_ls",
         "prismals",
-        "pylsp",
+        "pyright",
       },
     })
 
@@ -48,7 +48,7 @@ return {
         "black", -- python formatter
         "pylint",
         "eslint_d",
-        "pylsp",
+        "pyright",
       },
     })
   end,

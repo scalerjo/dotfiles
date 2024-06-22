@@ -3,6 +3,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
+    "mattn/efm-langserver",
     { "antosha417/nvim-lsp-file-operations", config = true },
     { "folke/neodev.nvim", opts = {} },
   },
@@ -84,6 +85,29 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
+
+    on_attach = function(client, bufnr)
+        vim.cmd([[
+          augroup lsp_autoformat 
+            autocmd! * <buffer>
+            autocmd BufWritePre <buffer> lua vim.lsp.buf.format(nil, 1000)
+          augroup END
+        ]], false)
+
+        if client.server_capabilities.document_highlight then
+          vim.cmd([[
+            hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+            hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+            hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+            augroup lsp_document_highlight
+              autocmd! * <buffer>
+              autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+              autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            augroup END
+          ]], false)
+        end
+      end
+
     mason_lspconfig.setup_handlers({
       -- default handler for installed servers
       function(server_name)
@@ -94,6 +118,7 @@ return {
       ["tsserver"] = function()
         lspconfig["tsserver"].setup({
           capabilities = capabilities,
+          on_attach = on_attach,
         })
       end,
       ["svelte"] = function()
@@ -129,6 +154,7 @@ return {
         -- configure lua server (with special settings)
         lspconfig["lua_ls"].setup({
           capabilities = capabilities,
+          on_attach = on_attach,
           settings = {
             Lua = {
               -- make the language server recognize "vim" global
@@ -142,43 +168,70 @@ return {
           },
         })
       end,
-      ["pylsp"] = function()
-        lspconfig["pylsp"].setup({
-          root_dir = custom_root_dir,
+      ["pyright"] = function()
+        lspconfig["pyright"].setup({
+          capabilities = capabilities,
+          init_options = { documentFormatting = true },
+          on_attach = on_attach,
           settings = {
-            pylsp = {
-              plugins = {
-                flake8 = {
-                  enabled = true,
-                  maxLineLength = 119,
-                },
-                mypy = {
-                  enabled = true,
-                },
-                pycodestyle = {
-                  enabled = false,
-                },
-                pyflakes = {
-                  enabled = false,
-                },
-                black = {
-                  enabled = true,
-                },
-                rope_autoimport = {
-                  enabled = true,
-                  completions = {
-                      enabled = true
-                  },
-                  code_actions = {
-                      enabled = true
-                  }
-                }
-              }
-            }
-          }
-
+            python = {
+              analysis = {
+                typeCheckingMode = "off"
+              },
+            },
+          },
         })
       end,
+    })
+
+    -- setup formatters and linters
+    local eslint = {
+      lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+      lintIgnoreExitCode = true,
+      lintStdin = true,
+      lintFormats = { "%f:%l:%c: %m" },
+    }
+
+    local prettier = {
+      formatCommand = "prettier ${INPUT}",
+      formatStdin = true,
+    }
+
+    local black = {
+      formatCommand = "black --quiet -",
+      formatStdin = true,
+    }
+
+    local flake8 = {
+      lintCommand = "flake8 --stdin-display-name ${INPUT} -",
+      lintStdin = true,
+      lintFormats = { "%f:%l:%c: %m" },
+    }
+
+    local mypy = {
+      lintCommand = "mypy --show-column-numbers",
+      lintFormats = {
+        "%f:%l:%c: %trror: %m",
+        "%f:%l:%c: %tarning: %m",
+        "%f:%l:%c: %tote: %m",
+      },
+    }
+    -- configure efm language server
+    lspconfig.efm.setup({
+      capabilities = capabilities,
+      filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+      init_options = { documentFormatting = true },
+      settings = {
+        rootMarkers = { ".eslintrc.js", "tsconfig.json", "setup.cfg", "setup.py", ".git/" },
+        languages = {
+          python = { black },
+          javascript = { prettier, eslint },
+          typescript = { prettier, eslint },
+          javascriptreact = { prettier, eslint },
+          typescriptreact = { prettier, eslint },
+        },
+      },
+      on_attach = on_attach,
     })
   end,
 }

@@ -47,6 +47,7 @@ picom
 ttf-meslo-nerd
 polybar
 xidlehook
+efm-langserver
 ```
 
 # Nvidia Packages Installed
