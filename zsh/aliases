@@ -1,0 +1,6 @@
+# Enable color support for ls and define the colors
+if [[ "$TERM" == xterm* || "$TERM" == screen* ]]; then
+  alias ls='ls --color=auto'
+fi
+
+alias rm='rm -i'

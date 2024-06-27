@@ -18,6 +18,7 @@ libpulse
 light-locker
 lightdm
 lightdm-gtk-greeter
+lightdm-settings
 lightdm-webkit2-greeter
 linux
 linux-firmware

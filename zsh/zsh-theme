@@ -1,0 +1,36 @@
+setopt PROMPT_SUBST
+
+# Enable color support
+autoload -U colors && colors
+
+# # Enable file type coloring
+# export CLICOLOR=1
+#
+# # Define color for each file type
+# export LSCOLORS=GxFxCxDxBxegedabagaced
+#
+# # Custom LS_COLORS
+# export LS_COLORS="di=34:fi=0:ln=35:pi=33:so=35:bd=34;46:cd=34;43:or=31;47:mi=31;47:ex=31:*.sh=32"
+#
+# # Function to get the current git branch
+# git_branch() {
+#   local branch
+#   branch=$(git symbolic-ref HEAD 2> /dev/null) || \
+#   branch=$(git rev-parse --short HEAD 2> /dev/null) || return
+#   echo "[${branch#refs/heads/}]"
+# }
+#
+# # Set the prompt
+# PROMPT='%F{green}%n@%m%f %F{blue}%1~%f $(git_branch) %F{yellow}>>>%f '
+
+
+# Function to get the current git branch
+git_branch() {
+  local branch
+  branch=$(git symbolic-ref HEAD 2> /dev/null) || \
+  branch=$(git rev-parse --short HEAD 2> /dev/null) || return
+  echo " %F{blue}[${branch#refs/heads/}]%f"
+}
+
+# Set the prompt with colored symbols
+PROMPT='%F{yellow}%n@%m%f %F{green}%~%f$(git_branch) %F{red}❯%F{yellow}❯%F{green}❯%f '
