@@ -6,6 +6,7 @@ pavucontrol.ini
 systemd
 dconf
 github-copilot
+polynar/polybar.config
 
 
 zsh/.zsh_history
