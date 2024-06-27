@@ -4,3 +4,4 @@ if [[ "$TERM" == xterm* || "$TERM" == screen* ]]; then
 fi
 
 alias rm='rm -i'
+alias vim='nvim'
