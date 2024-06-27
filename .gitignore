@@ -8,5 +8,7 @@ dconf
 github-copilot
 polynar/polybar.config
 
-
+zsh/.zcompdump
 zsh/.zsh_history
+polybar.config
+
