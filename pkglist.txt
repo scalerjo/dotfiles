@@ -1,7 +1,9 @@
+acpi
 alacritty
 base
 base-devel
 discord
+efitools
 efm-langserver
 feh
 firefox
@@ -14,6 +16,7 @@ i3blocks
 i3lock
 i3status
 intel-ucode
+iw
 libpulse
 light-locker
 lightdm
@@ -35,13 +38,19 @@ pipewire
 pipewire-alsa
 pipewire-jack
 polybar
+powertop
 pulseaudio
 pyenv
 ripgrep
 rofi
+sbctl
+sbsigntools
+sudo
+tlp
 tree
 ttf-meslo-nerd
 unzip
+upower
 vi
 vim
 webkit2gtk
@@ -97,7 +106,6 @@ xorg-xwd
 xorg-xwininfo
 xorg-xwud
 yay
-yay-debug
 zip
 zram-generator
 zsh
