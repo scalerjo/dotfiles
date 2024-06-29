@@ -46,7 +46,13 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 ```
 
+## Install system packages
+```bash
+pacman -S networkmanager vim vi nano git sudo zsh zsh-completions sbctl
+```
+
 ## Timezone
+- edit `/etc/locale.gen` and un-comment `en_US.UTF-8 UTF-8`
 ```bash
 locale-gen
 
@@ -58,11 +64,6 @@ hwclock --systohc --utc
 ## Hostname
 ```bash
 echo "archtop" > /etc/hostname
-```
-
-## Install system packages
-```bash
-pacman -S networkmanager vim vi nano git sudo zsh zsh-completions sbctl
 ```
 
 ## Edit /etc/mkinitcpio.conf add encrypt to HOOKS
