@@ -5,6 +5,8 @@ pulse
 pavucontrol.ini
 systemd
 dconf
+slack
+configstore
 github-copilot
 polynar/polybar.config
 
