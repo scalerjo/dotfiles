@@ -192,7 +192,7 @@ exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 
 #set background image
-exec_always feh --bg-scale ~/Backgrounds/peakpx.jpg
+exec_always feh --bg-scale ~/Backgrounds/main.jpg
 
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id rofi -show drun
