@@ -1,6 +1,7 @@
 
 . $ZDOTDIR/zsh-theme
 . $ZDOTDIR/aliases
+. $ZDOTDIR/local-aliases
 
 source $ZDOTDIR/search-highlighting.zsh
 

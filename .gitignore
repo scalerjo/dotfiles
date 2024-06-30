@@ -12,5 +12,6 @@ polynar/polybar.config
 
 zsh/.zcompdump
 zsh/.zsh_history
+zsh/local-aliases
 polybar.config
 
