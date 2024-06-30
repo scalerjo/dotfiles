@@ -3,6 +3,8 @@ alacritty
 base
 base-devel
 discord
+docker
+docker-compose
 efitools
 efm-langserver
 feh
@@ -26,11 +28,13 @@ lightdm-webkit2-greeter
 linux
 linux-firmware
 lua-language-server
+nano
 neofetch
 neovim
 networkmanager
 nvidia
 nvtop
+openresolv
 openssh
 pavucontrol
 picom
@@ -38,6 +42,7 @@ pipewire
 pipewire-alsa
 pipewire-jack
 polybar
+postgresql-libs
 powertop
 pulseaudio
 pyenv
@@ -45,7 +50,7 @@ ripgrep
 rofi
 sbctl
 sbsigntools
-sudo
+slack-desktop
 tlp
 tree
 ttf-meslo-nerd
@@ -54,6 +59,7 @@ upower
 vi
 vim
 webkit2gtk
+wireguard-tools
 wireplumber
 xautolock
 xclip
@@ -106,6 +112,7 @@ xorg-xwd
 xorg-xwininfo
 xorg-xwud
 yay
+yay-debug
 zip
 zram-generator
 zsh
