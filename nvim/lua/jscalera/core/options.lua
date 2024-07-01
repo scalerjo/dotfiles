@@ -44,3 +44,6 @@ opt.updatetime = 500
 
 -- keep 10 lines above/below cursor when scrolling
 opt.scrolloff = 10
+
+-- keep 15 characters left/right of cursor when scrolling
+opt.sidescrolloff = 15
