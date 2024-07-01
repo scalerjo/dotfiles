@@ -7,7 +7,7 @@ iwctl station wlan0 connect SSID
 
 ## Partitions
 - boot 512M tpye EF00 (EFI)
-- swap 8G type 8200 (SWAP)
+- swap 16G type 8200 (SWAP) equal to amount of RAM
 - root 100% type 8300 (ext4)
 
 ## Encryption
