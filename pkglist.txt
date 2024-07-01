@@ -51,6 +51,7 @@ rofi
 sbctl
 sbsigntools
 slack-desktop
+sql-language-server
 tlp
 tree
 ttf-meslo-nerd

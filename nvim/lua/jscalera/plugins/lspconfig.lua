@@ -184,5 +184,11 @@ return {
       },
       on_attach = on_attach,
     })
+
+    -- configure sqlls language server
+    lspconfig.sqlls.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
   end,
 }
