@@ -148,6 +148,18 @@ git clone https://github.com/scalerjo/dotfiles.git
 mv dotfiles ~/.config
 ```
 
+## Install yay
+```base
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
+## Install packages
+```bash
+yay -S --needed --noconfirm - < ~/.config/pkglist.txt
+```
+
 ## Create slick greeter config
 - edit `/etc/lightdm/lightdm.conf` set `greeter-session=lightdm-slick-greeter` and `user-session=i3`
 - edit `/etc/lightdm/slick-greeter.conf`
@@ -164,17 +176,4 @@ background = /usr/share/backgrounds/main.jpg
 
 ## Create .zshenv
 - `echo "export ZDOTDIR=$HOME/.config/zsh" > ~/.zshenv`
-
-## Install yay
-```base
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-```
-
-## Install packages
-```bash
-yay -S --needed --noconfirm - < ~/.config/pkglist.txt
-```
-
 
