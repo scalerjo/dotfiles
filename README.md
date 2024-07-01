@@ -1,3 +1,5 @@
+# Arch Linux Installation Guide
+
 ## Connecting to wifi during installation
 ```bash
 iwctl station wlan0 connect SSID
@@ -122,6 +124,11 @@ sbctl sign -s /boot/vmlinuz-linux
 sbctl sign -s /boot/EFI/BOOT/BOOTX64.EFI
 ```
 
+## Enable services
+```bash
+systemctl enable NetworkManager
+```
+
 ## Exit chroot
 ```basb
 exit
@@ -132,4 +139,42 @@ exit
 umount -R /mnt
 reboot
 ```
+
+# Post Installation
+
+## Clone this repo
+```bash
+git clone https://github.com/scalerjo/dotfiles.git
+mv dotfiles ~/.config
+```
+
+## Create slick greeter config
+- edit `/etc/lightdm/lightdm.conf` set `greeter-session=lightdm-slick-greeter` and `user-session=i3`
+- edit `/etc/lightdm/slick-greeter.conf`
+```
+[Greeter]
+show-power = true
+show-quit = true
+background = /usr/share/backgrounds/main.jpg
+```
+- `systemctl enable lightdm`
+
+## Copy polybar config example
+- `cp ~/.config/polybar/polybar.config.example ~/.config/polybar/polybar.config` and edit as needed
+
+## Create .zshenv
+- `echo "export ZDOTDIR=$HOME/.config/zsh" > ~/.zshenv`
+
+## Install yay
+```base
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+
+## Install packages
+```bash
+yay -S --needed --noconfirm - < ~/.config/pkglist.txt
+```
+
 
