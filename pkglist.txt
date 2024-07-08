@@ -2,7 +2,7 @@ acpi
 alacritty
 base
 base-devel
-discord
+chromium
 docker
 docker-compose
 efitools
@@ -28,10 +28,12 @@ lightdm-webkit2-greeter
 linux
 linux-firmware
 lua-language-server
+maim
 nano
 neofetch
 neovim
 networkmanager
+nftables
 nvidia
 nvtop
 openresolv

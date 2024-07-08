@@ -38,3 +38,5 @@ setopt pushdsilent
 setopt pushdtohome
 setopt sharehistory
 
+autoload compinit
+compinit

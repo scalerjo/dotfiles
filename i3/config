@@ -199,6 +199,9 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+space exec --no-startup-id rofi -show combi
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
+# screnshot 
+bindsym Print exec maim -s -u | xclip -selection clipboard -t image/png -i
+
 set $rosewater #f5e0dc
 set $flamingo  #f2cdcd
 set $pink      #f5c2e7
