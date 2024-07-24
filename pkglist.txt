@@ -2,6 +2,7 @@ acpi
 alacritty
 base
 base-devel
+bind
 chromium
 docker
 docker-compose
@@ -19,6 +20,7 @@ i3lock
 i3status
 intel-ucode
 iw
+libnl1
 libpulse
 light-locker
 lightdm
@@ -45,9 +47,11 @@ pipewire-alsa
 pipewire-jack
 polybar
 postgresql-libs
+postman-bin
 powertop
 pulseaudio
 pyenv
+reflector
 ripgrep
 rofi
 sbctl
