@@ -2,6 +2,9 @@
 
 ## Connecting to wifi during installation
 ```bash
+iwctl device list
+iwctl station wlan0 scan
+iwctl station wlan0 get-networks
 iwctl station wlan0 connect SSID
 ```
 
