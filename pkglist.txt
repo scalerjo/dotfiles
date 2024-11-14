@@ -4,6 +4,7 @@ base
 base-devel
 bind
 chromium
+dmidecode
 docker
 docker-compose
 efitools
@@ -34,6 +35,7 @@ maim
 nano
 neofetch
 neovim
+net-tools
 networkmanager
 nftables
 nvtop

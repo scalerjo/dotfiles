@@ -6,7 +6,6 @@ return {
     "windwp/nvim-ts-autotag",
   },
   config = function()
-
     -- import nvim-treesitter plugin
     local treesitter = require("nvim-treesitter.configs")
     -- configure treesitter
@@ -17,7 +16,7 @@ return {
       -- enable indentation
       indent = { enable = true },
       -- enable autotagging (w/ nvim-ts-autotag plugin)
-            -- ensure these language parsers are installed
+      -- ensure these language parsers are installed
       ensure_installed = {
         "json",
         "javascript",
@@ -27,6 +26,7 @@ return {
         "html",
         "css",
         "prisma",
+        "python",
         "markdown",
         "markdown_inline",
         "svelte",
@@ -50,6 +50,6 @@ return {
         },
       },
     })
-  require("nvim-ts-autotag").setup()
+    require("nvim-ts-autotag").setup()
   end,
 }

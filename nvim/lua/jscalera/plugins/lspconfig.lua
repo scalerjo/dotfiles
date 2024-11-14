@@ -185,10 +185,16 @@ return {
       on_attach = on_attach,
     })
 
-    -- configure sqlls language server
+    -- configure sql language server
+    -- with formatting
     lspconfig.sqlls.setup({
       capabilities = capabilities,
       on_attach = on_attach,
+      settings = {
+        sql = {
+          formatting = true,
+        },
+      },
     })
   end,
 }

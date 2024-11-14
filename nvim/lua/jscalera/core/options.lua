@@ -47,3 +47,5 @@ opt.scrolloff = 10
 
 -- keep 15 characters left/right of cursor when scrolling
 opt.sidescrolloff = 15
+
+vim.o.listchars = "eol:$,tab:>-,trail:~,extends:>,precedes:<,nbsp:.,space:·"
