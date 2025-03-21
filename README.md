@@ -53,7 +53,7 @@ arch-chroot /mnt
 
 ## Install system packages
 ```bash
-pacman -S networkmanager vim vi nano git sudo zsh zsh-completions sbctl
+pacman -S networkmanager vim vi nano git sudo zsh zsh-completions sbctl go
 ```
 
 ## Timezone
