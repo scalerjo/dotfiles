@@ -40,3 +40,5 @@ setopt sharehistory
 
 autoload compinit
 compinit
+
+. "$HOME/.local/bin/env"

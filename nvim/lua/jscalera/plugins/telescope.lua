@@ -24,6 +24,15 @@ return {
 
     telescope.setup({
       defaults = {
+        file_ignore_patterns = {
+          "node_modules",
+          ".git",
+          "image",
+          "annos",
+          "preprocessed_image",
+          "json_for_validation",
+          "logs"
+        },
         path_display = { "smart" },
         mappings = {
           i = {

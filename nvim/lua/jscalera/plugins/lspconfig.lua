@@ -172,7 +172,7 @@ return {
       filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact", "html" },
       init_options = { documentFormatting = true },
       settings = {
-        rootMarkers = { ".eslintrc.js", "tsconfig.json", "setup.cfg", "setup.py", ".git/" },
+        rootMarkers = { ".eslintrc.js", "tsconfig.json", "setup.cfg", "setup.py", ".git/", "train.py", "test.py" },
         languages = {
           python = { black, flake8, mypy },
           javascript = { prettier, eslint },

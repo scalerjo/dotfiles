@@ -9,6 +9,8 @@ docker
 docker-compose
 efitools
 efm-langserver
+falcon-sensor
+falcon-sensor-debug
 feh
 firefox
 git
@@ -19,8 +21,10 @@ i3-wm
 i3blocks
 i3lock
 i3status
+insomnia
 intel-ucode
 iw
+jq
 libnl1
 libpulse
 light-locker
@@ -59,7 +63,9 @@ sbctl
 sbsigntools
 slack-desktop
 sql-language-server
+tk
 tlp
+traceroute
 tree
 ttf-meslo-nerd
 unzip
