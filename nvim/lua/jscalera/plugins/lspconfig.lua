@@ -65,16 +65,43 @@ return {
       end,
     })
 
-    -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
-      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    vim.diagnostic.config({
+      virtual_text = true,      -- Show diagnostics inline (to the right)
+      signs = true,             -- Show signs in the sign column
+      update_in_insert = false, -- Don’t update diagnostics while typing
+      severity_sort = true,     -- Sort by severity (errors first)
+    })
+
+    -- override offset encoding
+    -- local original_make_position_params = vim.lsp.util.make_position_params
+    -- vim.lsp.util.make_position_params = function(window, offset_encoding)
+    --   offset_encoding = offset_encoding or "utf-16" -- Default explicitly
+    --   return original_make_position_params(window, offset_encoding)
+    -- end
+
+    local function get_extension(fname)
+      local ext = fname:match("^.+%.([^%.]+)$")
+      if not ext then
+        return ""
+      end
+
+      return ext:lower()
     end
 
+    local ignored_extensions = {
+      png = true,
+      jpg = true,
+      jpeg = true,
+      gif = true,
+      svg = true,
+      webp = true,
+      mp4 = true,
+      pth = true,
+      pt = true,
+      json = true,
+    }
 
-    local on_attach = function(client, _)
+    local on_attach = function(client, bufnr)
       vim.cmd([[
           augroup lsp_autoformat
             autocmd! * <buffer>
@@ -94,43 +121,41 @@ return {
             augroup END
           ]], false)
       end
+
+      local fname = vim.api.nvim_buf_get_name(bufnr)
+      local ext = get_extension(fname)
+
+      if ignored_extensions[ext] then
+        client.stop()
+        return
+      end
     end
 
-    -- setup formatters and linters
-    local eslint = {
-      lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
-      lintIgnoreExitCode = true,
-      lintStdin = true,
-      lintFormats = { "%f:%l:%c: %m" },
-    }
-
-    local prettier = {
-      formatCommand = "prettier ${INPUT}",
-      formatStdin = true,
-    }
-
-    local black = {
-      formatCommand = "black --quiet -",
-      formatStdin = true,
-    }
-
-    local flake8 = {
-      lintCommand = "./.venv/bin/flake8 --stdin-display-name ${INPUT} -",
-      lintStdin = true,
-      lintFormats = { "%f:%l:%c: %m" },
-    }
-
-    local mypy = {
-      lintCommand = "mypy --show-column-numbers",
-      lintFormats = {
-        "%f:%l:%c: %trror: %m",
-        "%f:%l:%c: %tarning: %m",
-        "%f:%l:%c: %tote: %m",
-      },
-    }
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client == nil then
+          return
+        end
+        if client.name == 'ruff' then
+          -- Disable hover in favor of Pyright
+          client.server_capabilities.hoverProvider = false
+        end
+      end,
+      desc = 'LSP: Disable hover capability from Ruff',
+    })
 
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
+    capabilities.textDocument.positionEncoding = "utf-16"
+
+    lspconfig.ruff.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      root_dir = vim.fn.getcwd(),
+      filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact", "html", "lua" },
+    })
 
     -- configure lua_ls with formatting
     lspconfig.lua_ls.setup({
@@ -143,6 +168,8 @@ return {
           indent_size = 2,
         }
       },
+      root_dir = vim.fn.getcwd(),
+      filetypes = { "lua" },
     })
 
     -- configure pyright server
@@ -157,44 +184,46 @@ return {
           },
         },
       },
+      root_dir = vim.fn.getcwd(),
+      filetypes = { "python" },
     })
 
     -- configure tsserver language server
-    lspconfig.tsserver.setup({
+    lspconfig.ts_ls.setup({
       capabilities = capabilities,
       on_attach = on_attach,
+      root_dir = vim.fn.getcwd(),
     })
 
-
-    -- configure efm language server
-    lspconfig.efm.setup({
-      capabilities = capabilities,
-      filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact", "html" },
-      init_options = { documentFormatting = true },
-      settings = {
-        rootMarkers = { ".eslintrc.js", "tsconfig.json", "setup.cfg", "setup.py", ".git/", "train.py", "test.py" },
-        languages = {
-          python = { black, flake8, mypy },
-          javascript = { prettier, eslint },
-          typescript = { prettier, eslint },
-          javascriptreact = { prettier, eslint },
-          typescriptreact = { prettier, eslint },
-          html = { prettier },
-        },
-      },
-      on_attach = on_attach,
-    })
-
-    -- configure sql language server
-    -- with formatting
-    lspconfig.sqlls.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = {
-        sql = {
-          formatting = true,
-        },
-      },
-    })
+    -- -- configure efm language server
+    -- lspconfig.efm.setup({
+    --   capabilities = capabilities,
+    --   filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact", "html" },
+    --   init_options = { documentFormatting = true },
+    --   settings = {
+    --     rootMarkers = { ".eslintrc.js", "tsconfig.json", "setup.cfg", "setup.py", ".git/", "train.py", "test.py" },
+    --     languages = {
+    --       python = { black, flake8, mypy },
+    --       javascript = { prettier, eslint },
+    --       typescript = { prettier, eslint },
+    --       javascriptreact = { prettier, eslint },
+    --       typescriptreact = { prettier, eslint },
+    --       html = { prettier },
+    --     },
+    --   },
+    --   on_attach = on_attach,
+    -- })
+    --
+    -- -- configure sql language server
+    -- -- with formatting
+    -- lspconfig.sqlls.setup({
+    --   capabilities = capabilities,
+    --   on_attach = on_attach,
+    --   settings = {
+    --     sql = {
+    --       formatting = true,
+    --     },
+    --   },
+    -- })
   end,
 }
