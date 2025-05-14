@@ -73,11 +73,11 @@ return {
     })
 
     -- override offset encoding
-    -- local original_make_position_params = vim.lsp.util.make_position_params
-    -- vim.lsp.util.make_position_params = function(window, offset_encoding)
-    --   offset_encoding = offset_encoding or "utf-16" -- Default explicitly
-    --   return original_make_position_params(window, offset_encoding)
-    -- end
+    local original_make_position_params = vim.lsp.util.make_position_params
+    vim.lsp.util.make_position_params = function(window, offset_encoding)
+      offset_encoding = offset_encoding or "utf-8" -- Default explicitly
+      return original_make_position_params(window, offset_encoding)
+    end
 
     local function get_extension(fname)
       local ext = fname:match("^.+%.([^%.]+)$")
