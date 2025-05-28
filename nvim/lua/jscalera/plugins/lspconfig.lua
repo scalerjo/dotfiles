@@ -148,13 +148,13 @@ return {
 
     -- used to enable autocompletion (assign to every lsp server config)
     local capabilities = cmp_nvim_lsp.default_capabilities()
-    capabilities.textDocument.positionEncoding = "utf-16"
+    capabilities.textDocument.positionEncoding = "utf-8"
 
     lspconfig.ruff.setup({
       capabilities = capabilities,
       on_attach = on_attach,
       root_dir = vim.fn.getcwd(),
-      filetypes = { "python", "javascript", "typescript", "javascriptreact", "typescriptreact", "html", "lua" },
+      filetypes = { "python", "typescript", "javascriptreact", "html", "lua" },
     })
 
     -- configure lua_ls with formatting
@@ -191,7 +191,12 @@ return {
     -- configure tsserver language server
     lspconfig.ts_ls.setup({
       capabilities = capabilities,
-      on_attach = on_attach,
+      on_attach = function(client, bufnr)
+        -- Disable ts_ls formatting to avoid conflicts with Prettier
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+        on_attach(client, bufnr) -- Call your existing on_attach function
+      end,
       root_dir = vim.fn.getcwd(),
     })
 
